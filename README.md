@@ -17,12 +17,11 @@ define void function isWinner to determine whether a given horse has reached the
 begin main function
     create array horses to contain horses' positions; five zeroes
     define boolean variable keepGoing
-    while no horse is a winner
-        
+    while no horse is a winner (while keepGoing is not FALSE)
         for each horse
             run function advance, with the horse's name and a reference to its position as input
             run function printLane, with the horse's name and a reference to its position as input
-            run function isWinner, with the horse's name and a reference to its position as input
+            assign to keepGoing the value returned by function isWinner, with the horse's name and a reference to its position as input
             ask the user to press Enter
         end for loop
     end while loop
@@ -35,9 +34,18 @@ begin advance for inputs of integer horseNum and reference horses
 end advance
 
 begin printLane for inputs of integer horseNum and reference horses
-    define integer length, assigned the value at horses belonging to horse named horseNum
-    for length that horse named horseNum has traveled
+    define integer distance, assigned the value at horses belonging to horse named horseNum
+    for distance that horse named horseNum has traveled
         print a period
     end for loop
     print horseNum
 end printLane
+
+begin isWinner for inputs of integer horseNum and reference horses
+    define boolean keepGoing and assign TRUE to it
+    if the given horse's position is greater than or equal to constant FINISH
+        print message declaring that horse named horseNum is a winner
+        assign FALSE to keepGoing
+    end if
+    return keepGoing
+end isWinner
