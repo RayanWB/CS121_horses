@@ -1,6 +1,7 @@
-# CS121_horses
-##A game that has horses randomly race to a finish line
+# CS121\_horses
+## A game that has horses randomly race to a finish line
 
+```
 This program should create five elements (horses) that have some starting position. 
 The program will then randomly decide whether or not each horse will move forward once in their position. 
 When one or more horses reach some final position, they will be declared the winner(s).
@@ -8,11 +9,11 @@ When one or more horses reach some final position, they will be declared the win
 include io stream
 include random library
 define constant FINISH for the length of the track
-define constant NUM\_HORSES for the number of horses
+define constant NUM_HORSES for the number of horses
 
 define void function advance to move horses forward
 define void function printLane to display horses and their positions
-define void function isWinner to determine whether a given horse has reached the finish line
+define boolean function isWinner to determine whether a given horse has reached the finish line
 
 begin main function
     create array horses to contain horses' positions; five zeroes
@@ -49,3 +50,4 @@ begin isWinner for inputs of integer horseNum and reference horses
     end if
     return keepGoing
 end isWinner
+```
