@@ -21,13 +21,16 @@
 		}
 */		
 		int horseSentry = 0;
-		while (keepGoing !== false){
-			for (horseSentry = 0; horseSentry < (NUM_HORSES - 1); horseSentry++){
-				advance(horseSentry, &horses);
-				printLane(horseSentry, &horses);
-				keepGoing = isWinner(horseSentry, &horses);
-				std::cout << "Press Enter to continue.";
-				std::cin >> continue;
+		while (keepGoing == true){
+			std::string userInput;
+			std::cout << "Press Enter to continue." << std::endl;
+			std::cin.ignore(256, '\n');
+			for (horseSentry = 0; horseSentry < NUM_HORSES; horseSentry++){
+				advance(horseSentry, horses);
+				printLane(horseSentry, horses);
+				if (isWinner(horseSentry, horses) == true){
+					keepGoing = false;
+				} // end if
 			} // end for
 		} // end while
 		std::cout << std::endl; // line break after test
@@ -39,22 +42,27 @@
 		std::random_device rd;
 		std::uniform_int_distribution<int> dist(0, 1);
 		forward = dist(rd); // coin flip
-		*horses[horseNUM] = *horses[horseNUM] + *forward // move forward 0 or 1 spaces
+		horses[horseNum] = horses[horseNum] + forward; // move forward 0 or 1 spaces
 	} // end advance
 	
 	void printLane(int horseNum, int* horses){
-		int distance = *horses[horseNum];
+		int distance = horses[horseNum];
+		int i;
 		for (i = 0; i < distance; i++){
 			std::cout << ".";
 		} // end for
-		std::cout << horseNum << std::endl;
+		std::cout << horseNum;
+		for (i = horses[horseNum]; i < FINISH; i++){
+			std::cout << ".";
+		} // end for
+		std::cout << std::endl;
 	} // end printLane
 
 	bool isWinner(int horseNum, int* horses){
-		bool keepGoing = true;
-		if (*horses[horseNum] >= FINISH){
-			std::cout << horseNum << " WINS! ! ! ! ! ! ! ! ! ! ! ! ! !" << std:endl;
-			keepGoing = false;
+		bool raceFinish = false;
+		if (horses[horseNum] >= FINISH){
+			std::cout << horseNum << " WINS! ! ! ! ! ! ! ! ! ! ! ! ! !" << std::endl;
+			raceFinish = true;
 		} // end if
-		return keepGoing;
+		return raceFinish;
 	} // end isWinner
