@@ -13,27 +13,19 @@
 
 	int main(){
 		int horses[NUM_HORSES] = {0, 0, 0, 0, 0}; // put horses' positions into an array
-		bool keepGoing = true;
-
-/*		int i = 0; // define sentry variable
-		for (i = 0; i < NUM_HORSES; i++){ // test for passing values in horses
-			std::cout << horses[i]; // print a horse's position
-		}
-*/		
+		bool keepGoing = true;	
 		int horseSentry = 0;
 		while (keepGoing == true){
-			std::string userInput;
-			std::cout << "Press Enter to continue." << std::endl;
-			std::cin.ignore(256, '\n');
-			for (horseSentry = 0; horseSentry < NUM_HORSES; horseSentry++){
+			std::cout << "Press Enter to continue.";
+			std::cin.ignore(256, '\n'); // allows the user to continue without cin requiring input other than Enter
+			for (horseSentry = 0; horseSentry < NUM_HORSES; horseSentry++){ // checks/updates the position for each horse and determines who's won
 				advance(horseSentry, horses);
 				printLane(horseSentry, horses);
-				if (isWinner(horseSentry, horses) == true){
-					keepGoing = false;
+				if (isWinner(horseSentry, horses) == true){ // isWinner returns true when a horse reaches the finish line
+					keepGoing = false; // keepGoing is updated outside of isWinner so that it can't be initialized back to true by non-winning horses
 				} // end if
 			} // end for
 		} // end while
-		std::cout << std::endl; // line break after test
 		return 0;
 	} // end main
 
@@ -45,24 +37,24 @@
 		horses[horseNum] = horses[horseNum] + forward; // move forward 0 or 1 spaces
 	} // end advance
 	
-	void printLane(int horseNum, int* horses){
+	void printLane(int horseNum, int* horses){ // displays a horse's position along the track
 		int distance = horses[horseNum];
 		int i;
-		for (i = 0; i < distance; i++){
+		for (i = 0; i < distance; i++){ // spaces traveled
 			std::cout << ".";
 		} // end for
 		std::cout << horseNum;
-		for (i = horses[horseNum]; i < FINISH; i++){
+		for (i = horses[horseNum]; i < FINISH; i++){ // spaces until finish line
 			std::cout << ".";
 		} // end for
 		std::cout << std::endl;
 	} // end printLane
 
-	bool isWinner(int horseNum, int* horses){
+	bool isWinner(int horseNum, int* horses){ // determines if a horse has reached the finish line and signals the end of the race if so
 		bool raceFinish = false;
 		if (horses[horseNum] >= FINISH){
-			std::cout << horseNum << " WINS! ! ! ! ! ! ! ! ! ! ! ! ! !" << std::endl;
+			std::cout << horseNum << " WINS! ! ! ! ! !" << std::endl;
 			raceFinish = true;
 		} // end if
-		return raceFinish;
+		return raceFinish; // returned value controls the while loop in main() 
 	} // end isWinner
